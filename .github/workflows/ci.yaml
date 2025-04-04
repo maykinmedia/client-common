@@ -1,4 +1,4 @@
-name: Run CI build and tests
+name: Checks
 
 # Run this workflow every time a new commit pushed to your repository
 on:
@@ -71,25 +71,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
+          node-version-file: '.nvmrc'
 
       - name: Install dependencies
-        run: npm install
-      - name: Install Playwright
-        run: npx playwright install --with-deps
+        run: npm ci
 
-      - name: Build Storybook
-        run: npm run build-storybook --quiet
+      - name: Run vitest tests
+        run: npm run test:coverage
 
-      - name: Serve Storybook and run tests
-        run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server storybook-static --port 6006" \
-            "npx wait-on tcp:127.0.0.1:6006 && npm run test-storybook"
-
-      - name: Publish to Chromatic
-        uses: chromaui/action@latest
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
         with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          autoAcceptChanges: "main"
+          files: ./coverage/coverage-final.json
+          flags: vitest
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

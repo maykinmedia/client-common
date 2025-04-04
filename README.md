@@ -1,3 +1,5 @@
+![GitHub Actions](https://github.com/maykinmedia/client-common/actions/workflows/ci.yaml/badge.svg)
+[![codecov](https://codecov.io/github/maykinmedia/client-common/graph/badge.svg?token=UAEDGVNEPU)](https://codecov.io/github/maykinmedia/client-common)
 <p align="center">
   <a href="https://maykinmedia.nl">
     <img alt="Maykin logo" src="https://www.maykinmedia.nl/static/maykinmedia/img/maykin_logo.png" />
