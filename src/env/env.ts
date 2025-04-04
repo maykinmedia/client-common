@@ -19,14 +19,19 @@ export function envGet<T = undefined>(
 }
 
 /**
- * Retrieves and converts the value of an environment variable to its typed value.
+ * Retrieves the value of an environment variable and converts it to a typed value.
  *
- * This function first calls `envGet` to get the raw environment variable value,
- * and then converts it into a more appropriate type (e.g., `true`/`false` for boolean
- * values). See value2TypedValue (private) for more information.
+ * This function uses `envGet` to fetch the raw value and then converts it to an
+ * appropriate JavaScript type. Supports conversion to:
  *
- * @param {string} name - The name of the environment variable to retrieve and convert.
- * @param defaultValue - The default value.
+ * - boolean (`'true'` → `true`, `'false'` → `false`)
+ * - yes/no (`'yes'` → `true`, `'no'` → `false`)
+ * - number (`'123'` → `123`)
+ *
+ * Returns the `defaultValue` if the variable is not set.
+ *
+ * @param {string} name - Name of the environment variable to retrieve.
+ * @param defaultValue - Fallback value if the environment variable is not found.
  */
 export function typedEnvGet<T = undefined>(
   name: string,

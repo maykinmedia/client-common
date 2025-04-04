@@ -10,7 +10,9 @@
     "src"
   ],
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "npm run build:docs && npm run build:source",
+    "build:docs": "typedoc",
+    "build:source": "tsc && vite build",
     "commitlint": "commitlint --edit",
     "dev": "vite",
     "test": "vitest",
@@ -33,6 +35,8 @@
     "jsdom": "^26.0.0",
     "lint-staged": "^15.5.0",
     "prettier": "3.5.3",
+    "typedoc": "^0.28.1",
+    "typedoc-plugin-markdown": "^4.6.1",
     "typescript": "~5.7.2",
     "vite": "^6.2.0",
     "vitest": "^3.1.1"
