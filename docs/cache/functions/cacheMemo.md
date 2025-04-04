@@ -22,21 +22,27 @@ Returns possible cached return value of `factory`.
 
 `string`
 
-A key, that once combined with `parameters` identifies the cached return value.
+A key, that once combined with `parameters` identifies the
+  cached return value.
 
 ### factory
 
 `F`
 
-A function which return value should be cached, receives `params` as arguments.
+A function whose return value should be cached,
+  receives `params` as arguments.
 
 ### params
 
 `Parameters`\<`F`\> = `...`
 
-An array of values that are passed `factory` as arguments and their stringified values are used in
-  constructing the cache key string,
+An array of values that are passed to `factory` as
+  arguments. Their stringified values are used in constructing the
+  cache key string.
 
 ## Returns
 
 `Promise`\<`Awaited`\<`ReturnType`\<`F`\>\>\>
+
+A `Promise` that resolves to the cached value if found, otherwise
+  the result of the factory function.

@@ -16,6 +16,10 @@ Gets the value of a cookie.
 
 `string`
 
+The name of the cookie to retrieve.
+
 ## Returns
 
 `null` \| `string`
+
+The cookie value if it exists, otherwise null.

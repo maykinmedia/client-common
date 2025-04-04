@@ -23,8 +23,10 @@ Note: This function is async to accommodate possible future refactors.
 
 `string`
 
-A key identifying the selection.
+A key identifying the cache record.
 
 ## Returns
 
 `Promise`\<`null` \| `T`\>
+
+A `Promise` that resolves to the cached value if found and valid, otherwise `null`.

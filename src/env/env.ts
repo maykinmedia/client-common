@@ -1,11 +1,13 @@
 /**
- * Retrieves the value of an environment variable from either Node.js or Vite environment.
+ * Retrieves the value of an environment variable from either Node.js or Vite
+ * environment.
  *
  * This function combines the environment variables from `process.env` (Node.js)
  * and `import.meta.env` (Vite) and returns the value of the specified variable.
  *
- * @param {string} name - The name of the environment variable to retrieve.
+ * @param name - The name of the environment variable to retrieve.
  * @param defaultValue - The default value.
+ * @returns The value of the environment variable or the default value.
  */
 export function envGet<T = undefined>(
   name: string,
@@ -30,8 +32,9 @@ export function envGet<T = undefined>(
  *
  * Returns the `defaultValue` if the variable is not set.
  *
- * @param {string} name - Name of the environment variable to retrieve.
+ * @param name - Name of the environment variable to retrieve.
  * @param defaultValue - Fallback value if the environment variable is not found.
+ * @returns The converted typed value of the environment variable or the default value.
  */
 export function typedEnvGet<T = undefined>(
   name: string,
@@ -51,12 +54,12 @@ export function typedEnvGet<T = undefined>(
  * strict comparison (comparing raw values as strings). If no env value is found,
  * `false` is returned.
  *
- * @param {string} name - The name of the environment variable to compare.
- * @param {unknown} value - The value to compare the environment variable to.
- * @param {boolean} [loose=true] - If `true`, the comparison will be loose (values
- *                                  are converted to types).
- *                                 If `false`, the comparison will be strict (raw
- *                                  string values are compared).
+ * @param name - The name of the environment variable to compare.
+ * @param value - The value to compare the environment variable to.
+ * @param loose - If `true`, the comparison will be loose (values are converted
+ *                to types). If `false`, the comparison will be strict (raw
+ *                string values are compared).
+ * @returns `true` if the comparison is successful, otherwise `false`.
  */
 export function envCompare(name: string, value: unknown, loose = true) {
   const envValue = envGet(name);
@@ -77,12 +80,11 @@ export function envCompare(name: string, value: unknown, loose = true) {
  * for boolean, or a number).
  *
  * This private function is used internally to convert environment variable values
- * to their proper types.
- * It supports boolean conversions (`true`/`false`) and numeric conversions (e.g.,
- * `"123"` to `123`).
+ * to their proper types. It supports boolean conversions (`true`/`false`) and
+ * numeric conversions (e.g., `"123"` to `123`).
  *
- * @param {string} value - The string value to convert.
- * @private
+ * @param value - The string value to convert.
+ * @returns The converted typed value.
  */
 function value2TypedValue<T>(value: T): T | boolean | number {
   const strValue = String(value).toLowerCase();

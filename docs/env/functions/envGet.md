@@ -8,7 +8,8 @@
 
 > **envGet**\<`T`\>(`name`, `defaultValue`?): `string` \| `T`
 
-Retrieves the value of an environment variable from either Node.js or Vite environment.
+Retrieves the value of an environment variable from either Node.js or Vite
+environment.
 
 This function combines the environment variables from `process.env` (Node.js)
 and `import.meta.env` (Vite) and returns the value of the specified variable.
@@ -36,3 +37,5 @@ The default value.
 ## Returns
 
 `string` \| `T`
+
+The value of the environment variable or the default value.

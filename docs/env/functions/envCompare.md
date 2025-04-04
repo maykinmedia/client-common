@@ -6,7 +6,7 @@
 
 # Function: envCompare()
 
-> **envCompare**(`name`, `value`, `loose`?): `boolean`
+> **envCompare**(`name`, `value`, `loose`): `boolean`
 
 Compares the value of an environment variable to a specified value.
 
@@ -29,15 +29,16 @@ The name of the environment variable to compare.
 
 The value to compare the environment variable to.
 
-### loose?
+### loose
 
 `boolean` = `true`
 
-If `true`, the comparison will be loose (values
-                                 are converted to types).
-                                If `false`, the comparison will be strict (raw
-                                 string values are compared).
+If `true`, the comparison will be loose (values are converted
+               to types). If `false`, the comparison will be strict (raw
+               string values are compared).
 
 ## Returns
 
 `boolean`
+
+`true` if the comparison is successful, otherwise `false`.

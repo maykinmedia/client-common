@@ -8,7 +8,7 @@
 
 > **setPreference**\<`T`\>(`key`, `value`): `Promise`\<`void`\>
 
-Sets preference cache.
+Sets the preference cache.
 Note: This function is async to accommodate possible future refactors.
 
 ## Type Parameters
@@ -23,12 +23,16 @@ Note: This function is async to accommodate possible future refactors.
 
 `string`
 
-A key identifying the selection
+A key identifying the selection.
 
 ### value
 
 `T`
 
+The value to store for the given key.
+
 ## Returns
 
 `Promise`\<`void`\>
+
+A `Promise` that resolves once the preference is set.

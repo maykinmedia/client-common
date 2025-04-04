@@ -17,7 +17,7 @@ Note: This function is async to accommodate possible future refactors.
 
 `string`
 
-A key identifying the selection.
+A key identifying the cache record.
 
 ### value
 
@@ -28,3 +28,5 @@ The value to cache.
 ## Returns
 
 `Promise`\<`void`\>
+
+A `Promise` that resolves once the value is cached.

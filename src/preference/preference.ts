@@ -22,7 +22,9 @@ export const PREFERENCE_CONFIG = {
 /**
  * Gets the preference.
  * Note: This function is async to accommodate possible future refactors.
- * @param key A key identifying the selection
+ *
+ * @param key - A key identifying the selection.
+ * @returns A `Promise` that resolves to the preference value, or `undefined` if not found.
  */
 export async function getPreference<
   T extends string | number | bigint | boolean | null | object,
@@ -53,14 +55,16 @@ export async function getPreference<
 }
 
 /**
- * Sets preference cache.
+ * Sets the preference cache.
  * Note: This function is async to accommodate possible future refactors.
- * @param key A key identifying the selection
- * @param value
+ *
+ * @param key - A key identifying the selection.
+ * @param value - The value to store for the given key.
+ * @returns A `Promise` that resolves once the preference is set.
  */
 export async function setPreference<
   T extends string | number | bigint | boolean | null | object,
->(key: string, value: T) {
+>(key: string, value: T): Promise<void> {
   const computedKey = _getComputedKey(key);
   const type =
     value === null ? "null" : typeof value === "object" ? "json" : typeof value;
@@ -82,18 +86,23 @@ export async function setPreference<
   }
 }
 
-/**a
+/**
+ * Clears the preference.
  * Note: This function is async to accommodate possible future refactors.
- * @param key A key identifying the selection
+ *
+ * @param key - A key identifying the selection to clear.
+ * @returns A `Promise` that resolves once the preference is cleared.
  */
-export async function clearPreference(key: string) {
+export async function clearPreference(key: string): Promise<void> {
   const computedKey = _getComputedKey(key);
   localStorage.removeItem(computedKey);
 }
 
 /**
  * Computes the prefixed cache key.
- * @param key A key identifying the selection
+ *
+ * @param key - A key identifying the selection.
+ * @returns The computed cache key.
  */
 function _getComputedKey(key: string): string {
   return `${PREFERENCE_CONFIG.KEY_PREFIX}.${key}`;

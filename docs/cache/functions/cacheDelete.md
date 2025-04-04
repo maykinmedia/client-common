@@ -17,15 +17,17 @@ Note: This function is async to accommodate possible future refactors.
 
 `string`
 
-A key identifying the selection.
+A key identifying the cache record.
 
 ### startsWith
 
 `boolean` = `false`
 
-Whether to remove cache records with a key that starts with `
- key` (including parameterized records).
+Whether to remove cache records with a key that
+  starts with `key` (including parameterized records).
 
 ## Returns
 
 `Promise`\<`void`\>
+
+A `Promise` that resolves once the item is removed from cache.

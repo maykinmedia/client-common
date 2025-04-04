@@ -16,7 +16,9 @@ export const CACHE_CONFIG = {
 /**
  * Retrieves item from cache.
  * Note: This function is async to accommodate possible future refactors.
- * @param key - A key identifying the selection.
+ *
+ * @param key - A key identifying the cache record.
+ * @returns A `Promise` that resolves to the cached value if found and valid, otherwise `null`.
  */
 export async function cacheGet<T>(key: string): Promise<T | null> {
   if (CACHE_CONFIG.DISABLED) {
@@ -48,10 +50,12 @@ export async function cacheGet<T>(key: string): Promise<T | null> {
 /**
  * Add item to cache.
  * Note: This function is async to accommodate possible future refactors.
- * @param key - A key identifying the selection.
+ *
+ * @param key - A key identifying the cache record.
  * @param value - The value to cache.
+ * @returns A `Promise` that resolves once the value is cached.
  */
-export async function cacheSet(key: string, value: unknown) {
+export async function cacheSet(key: string, value: unknown): Promise<void> {
   if (CACHE_CONFIG.DISABLED) {
     return;
   }
@@ -68,11 +72,16 @@ export async function cacheSet(key: string, value: unknown) {
 /**
  * Removes item from cache.
  * Note: This function is async to accommodate possible future refactors.
- * @param key - A key identifying the selection.
- * @param startsWith - Whether to remove cache records with a key that starts with `
- *  key` (including parameterized records).
+ *
+ * @param key - A key identifying the cache record.
+ * @param startsWith - Whether to remove cache records with a key that
+ *   starts with `key` (including parameterized records).
+ * @returns A `Promise` that resolves once the item is removed from cache.
  */
-export async function cacheDelete(key: string, startsWith = false) {
+export async function cacheDelete(
+  key: string,
+  startsWith = false,
+): Promise<void> {
   const computedKey = _getComputedKey(key);
   sessionStorage.removeItem(computedKey);
 
@@ -90,10 +99,16 @@ export async function cacheDelete(key: string, startsWith = false) {
 
 /**
  * Returns possible cached return value of `factory`.
- * @param key - A key, that once combined with `parameters` identifies the cached return value.
- * @param factory - A function which return value should be cached, receives `params` as arguments.
- * @param params - An array of values that are passed `factory` as arguments and their stringified values are used in
- *   constructing the cache key string,
+ *
+ * @param key - A key, that once combined with `parameters` identifies the
+ *   cached return value.
+ * @param factory - A function whose return value should be cached,
+ *   receives `params` as arguments.
+ * @param params - An array of values that are passed to `factory` as
+ *   arguments. Their stringified values are used in constructing the
+ *   cache key string.
+ * @returns A `Promise` that resolves to the cached value if found, otherwise
+ *   the result of the factory function.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function cacheMemo<F extends (...args: any[]) => unknown>(
@@ -113,7 +128,9 @@ export async function cacheMemo<F extends (...args: any[]) => unknown>(
 
 /**
  * Computes the prefixed cache key including the prefix.
- * @param key - A key identifying the selection.
+ *
+ * @param key - A key identifying the cache record.
+ * @returns The computed cache key string.
  */
 function _getComputedKey(key: string): string {
   return `${CACHE_CONFIG.KEY_PREFIX}.${key}`;
@@ -121,8 +138,10 @@ function _getComputedKey(key: string): string {
 
 /**
  * Returns a key (not fully computed key) containing both `key` and `params`.
- * @param key
+ *
+ * @param key - A string key used as the base for parameterized caching.
  * @param params - Should only contain string serializable values.
+ * @returns The cache key including the parameters if provided.
  */
 function _getParameterizedKey(key: string, params?: Array<unknown>): string {
   const _params = params?.map((v) => String(v));

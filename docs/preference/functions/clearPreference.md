@@ -8,7 +8,7 @@
 
 > **clearPreference**(`key`): `Promise`\<`void`\>
 
-a
+Clears the preference.
 Note: This function is async to accommodate possible future refactors.
 
 ## Parameters
@@ -17,8 +17,10 @@ Note: This function is async to accommodate possible future refactors.
 
 `string`
 
-A key identifying the selection
+A key identifying the selection to clear.
 
 ## Returns
 
 `Promise`\<`void`\>
+
+A `Promise` that resolves once the preference is cleared.

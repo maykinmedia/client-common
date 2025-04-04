@@ -23,8 +23,10 @@ Note: This function is async to accommodate possible future refactors.
 
 `string`
 
-A key identifying the selection
+A key identifying the selection.
 
 ## Returns
 
 `Promise`\<`undefined` \| `T`\>
+
+A `Promise` that resolves to the preference value, or `undefined` if not found.

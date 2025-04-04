@@ -42,3 +42,5 @@ Fallback value if the environment variable is not found.
 ## Returns
 
 `string` \| `number` \| `boolean` \| `T`
+
+The converted typed value of the environment variable or the default value.
