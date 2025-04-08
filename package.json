@@ -5,11 +5,39 @@
   "license": "EUPL-1.2",
   "type": "module",
   "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./cache": {
+      "types": "./dist/types/cache/cache.d.ts",
+      "import": "./dist/es/cache.js",
+      "require": "./dist/cjs/cache.js"
+    },
+    "./cookie": {
+      "types": "./dist/types/cookie/cookie.d.ts",
+      "import": "./dist/es/cookie.js",
+      "require": "./dist/cjs/cookie.js"
+    },
+    "./env": {
+      "types": "./dist/types/env/env.d.ts",
+      "import": "./dist/es/env.js",
+      "require": "./dist/cjs/env.js"
+    },
+    "./preference": {
+      "types": "./dist/types/preference/preference.d.ts",
+      "import": "./dist/es/preference.js",
+      "require": "./dist/cjs/preference.js"
+    }
+  },
   "scripts": {
     "build": "npm run build:docs && npm run build:source",
     "build:docs": "typedoc",
