@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 
 import packageJson from "./package.json";
 
@@ -38,4 +39,10 @@ export default defineConfig({
       },
     },
   },
+  plugins: [
+    dts({
+      entryRoot: "src",
+      outDir: "dist/types",
+    }),
+  ],
 });
