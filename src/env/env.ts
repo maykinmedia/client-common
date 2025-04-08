@@ -13,8 +13,22 @@ export function envGet<T = undefined>(
   name: string,
   defaultValue?: T,
 ): string | T {
-  const nodeEnv = process.env;
-  const viteEnv = import.meta.env;
+  // For node (or webpack) environments.
+  let nodeEnv;
+  try {
+    nodeEnv = process.env;
+  } catch {
+    // process.env is not defined.
+  }
+
+  // For vite environments
+  let viteEnv;
+  try {
+    viteEnv = import.meta.env;
+  } catch {
+    // import.meta.env is not defined.
+  }
+
   const env = { ...nodeEnv, ...viteEnv };
   const rawEnvValue = env[name];
   return typeof rawEnvValue === "undefined" ? defaultValue : rawEnvValue;
