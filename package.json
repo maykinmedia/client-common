@@ -27,6 +27,16 @@
       "import": "./dist/es/cookie.js",
       "require": "./dist/cjs/cookie.js"
     },
+    "./debounce": {
+      "types": "./dist/types/debounce/debounce.d.ts",
+      "import": "./dist/es/debounce.js",
+      "require": "./dist/cjs/debounce.js"
+    },
+    "./delay": {
+      "types": "./dist/types/delay/delay.d.ts",
+      "import": "./dist/es/delay.js",
+      "require": "./dist/cjs/delay.js"
+    },
     "./env": {
       "types": "./dist/types/env/env.d.ts",
       "import": "./dist/es/env.js",
