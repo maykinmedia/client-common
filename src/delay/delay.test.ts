@@ -3,46 +3,38 @@ import { expect } from "vitest";
 import { delay } from "../delay";
 
 describe("delay", () => {
-  vi.useFakeTimers();
-
-  afterEach(() => {
-    vi.clearAllTimers();
-  });
-
-  test("should return a Promise", async () => {
+  test("should return a Promise", () => {
     const promise = delay();
     expect(promise).toBeInstanceOf(Promise);
   });
 
-  test("should resolve after 300ms", async () => {
-    let resolved = false;
-    const promise = delay();
-    promise.then(() => {
-      resolved = true;
-    });
+  test("should resolve after 300ms", () =>
+    new Promise<void>((done) => {
+      const started = Date.now();
+      let resolved: number | null = null;
+      const promise = delay();
+      promise.then(() => {
+        resolved = Date.now();
+      });
 
-    vi.advanceTimersByTime(299);
-    expect(resolved).toBe(false);
+      setTimeout(() => {
+        expect(resolved).toBeGreaterThanOrEqual(started + 300);
+        done();
+      }, 300);
+    }));
 
-    vi.advanceTimersByTime(1);
-    await Promise.resolve();
+  test("should allow a custom timeout te be passed", () =>
+    new Promise<void>((done) => {
+      const started = Date.now();
+      let resolved: number | null = null;
+      const promise = delay(10);
+      promise.then(() => {
+        resolved = Date.now();
+      });
 
-    expect(resolved).toBe(true);
-  });
-
-  test("should allow a custom timeout te be passed", async () => {
-    let resolved = false;
-    const promise = delay(10);
-    promise.then(() => {
-      resolved = true;
-    });
-
-    vi.advanceTimersByTime(9);
-    expect(resolved).toBe(false);
-
-    vi.advanceTimersByTime(1);
-    await Promise.resolve();
-
-    expect(resolved).toBe(true);
-  });
+      setTimeout(() => {
+        expect(resolved).toBeGreaterThanOrEqual(started + 10);
+        done();
+      }, 10);
+    }));
 });
