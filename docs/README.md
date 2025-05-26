@@ -8,5 +8,7 @@
 
 - [cache](cache/README.md)
 - [cookie](cookie/README.md)
+- [debounce](debounce/README.md)
+- [delay](delay/README.md)
 - [env](env/README.md)
 - [preference](preference/README.md)
