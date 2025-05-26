@@ -53,4 +53,25 @@ describe("debounce", () => {
     await delay(10);
     expect(fn).not.toHaveBeenCalled();
   });
+
+  test("should allow multiple debounced fns to operate individually", async () => {
+    for (let i = 1; i <= 3; i++) {
+      const timeout = i * 10;
+      const fn1 = vi.fn();
+      const debouncedFn1 = debounce(fn1, timeout);
+
+      const fn2 = vi.fn();
+      const debouncedFn2 = debounce(fn2, timeout);
+
+      debouncedFn1();
+      expect(fn1).not.toHaveBeenCalled();
+
+      debouncedFn2();
+      expect(fn2).not.toHaveBeenCalled();
+
+      await delay(timeout);
+      expect(fn1).toHaveBeenCalled();
+      expect(fn2).toHaveBeenCalled();
+    }
+  });
 });
