@@ -37,7 +37,7 @@ export function removeSpecialChars(input: string): string {
 }
 
 /**
- * Converts a string to a URL-friendly slug.
+ * Converts a string to a URL-friendly slug, modelled after Django's version.
  *
  * @param string - The input string to be slugified.
  * @returns The slugified string.
@@ -127,23 +127,54 @@ export function ucFirst(string: string): string {
   );
 }
 
+/**
+ * Capitalizes the first letter of each word in the input string.
+ *
+ * @param string - The input string to transform.
+ * @returns The title-cased string.
+ */
 export function title(string: string): string {
   return string.split(/\s+/).map(ucFirst).join(" ");
 }
 
 export type String2TitleOptions = {
+  /**
+   * Whether to insert spaces before uppercase letters.
+   */
   addSpaces?: boolean;
+
+  /**
+   * Whether to replace hyphens with whitespace.
+   */
   hyphens2Whitespace?: boolean;
+
+  /**
+   * Whether to convert the result to lowercase.
+   */
   lowerCase?: boolean;
+
+  /**
+   * Whether to capitalize the first letter of each word.
+   */
   title?: boolean;
+
+  /**
+   * Whether to capitalize the first letter of the result.
+   */
   ucFirst?: boolean;
 };
 
-export const string2Title = (
+/**
+ * Applies configurable transformations to turn a string into a readable title.
+ *
+ * @param string - The input string to transform.
+ * @param options - Transformation options.
+ * @returns The formatted title string.
+ */
+export function string2Title(
   string: string,
   options?: String2TitleOptions,
-): string => {
-  // Set default values for options using the spread operator
+): string {
   const {
     addSpaces: addSpacesBool = true,
     hyphens2Whitespace: hyphens2WhitespaceBool = true,
@@ -175,7 +206,7 @@ export const string2Title = (
   }
 
   return result;
-};
+}
 
 /**
  * Replaces whitespace characters (that are followed by word characters) with hyphens,

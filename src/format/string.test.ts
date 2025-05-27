@@ -66,6 +66,7 @@ describe("removeSpecialChars", () => {
 });
 
 describe("slugify", () => {
+  // These values come from the Django test suite.
   test.each([
     ["Hello, World!", "hello-world"],
     ["spam & eggs", "spam-eggs"],
