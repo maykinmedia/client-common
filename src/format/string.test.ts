@@ -206,6 +206,12 @@ describe("title", () => {
 
 describe("string2Title", () => {
   test.each([
+    ["foo", undefined, "Foo"],
+    ["foo-bar", undefined, "Foo Bar"],
+    ["foo-barBaz", undefined, "Foo Bar Baz"],
+    [" foo-bar ", undefined, " Foo Bar "],
+    ["fooBar😁", undefined, "Foo Bar😁"],
+
     ["foo", {}, "Foo"],
     ["foo-bar", {}, "Foo Bar"],
     ["foo-barBaz", {}, "Foo Bar Baz"],
