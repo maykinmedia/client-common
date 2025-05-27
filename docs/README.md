@@ -11,4 +11,5 @@
 - [debounce](debounce/README.md)
 - [delay](delay/README.md)
 - [env](env/README.md)
+- [format](format/README.md)
 - [preference](preference/README.md)
