@@ -42,6 +42,11 @@
       "import": "./dist/es/env.js",
       "require": "./dist/cjs/env.js"
     },
+    "./format": {
+      "types": "./dist/types/format/format.d.ts",
+      "import": "./dist/es/format.js",
+      "require": "./dist/cjs/format.js"
+    },
     "./preference": {
       "types": "./dist/types/preference/preference.d.ts",
       "import": "./dist/es/preference.js",
