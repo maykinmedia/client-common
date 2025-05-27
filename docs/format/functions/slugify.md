@@ -8,7 +8,7 @@
 
 > **slugify**(`string`): `string`
 
-Converts a string to a URL-friendly slug.
+Converts a string to a URL-friendly slug, modelled after Django's version.
 
 ## Parameters
 

@@ -8,12 +8,18 @@
 
 > **title**(`string`): `string`
 
+Capitalizes the first letter of each word in the input string.
+
 ## Parameters
 
 ### string
 
 `string`
 
+The input string to transform.
+
 ## Returns
 
 `string`
+
+The title-cased string.
