@@ -15,7 +15,7 @@ import {
   toASCII,
   ucFirst,
   whitespace2Hyphens,
-} from "./format";
+} from "./string";
 
 describe("isLink", () => {
   test.each([
