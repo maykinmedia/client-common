@@ -17,6 +17,11 @@
       "import": "./dist/es/index.js",
       "require": "./dist/cjs/index.js"
     },
+    "./assert": {
+      "types": "./dist/types/assert/assert.d.ts",
+      "import": "./dist/es/assert.js",
+      "require": "./dist/cjs/assert.js"
+    },
     "./cache": {
       "types": "./dist/types/cache/cache.d.ts",
       "import": "./dist/es/cache.js",

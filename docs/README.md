@@ -6,6 +6,7 @@
 
 ## Modules
 
+- [assert](assert/README.md)
 - [cache](cache/README.md)
 - [cookie](cookie/README.md)
 - [debounce](debounce/README.md)
