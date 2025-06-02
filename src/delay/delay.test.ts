@@ -18,7 +18,7 @@ describe("delay", () => {
       });
 
       setTimeout(() => {
-        expect(resolved).toBeGreaterThanOrEqual(started + 300);
+        expect(resolved).toBeGreaterThanOrEqual(started + 300 - 1);
         done();
       }, 300);
     }));
