@@ -249,13 +249,15 @@ describe("cacheMemo", () => {
   });
 
   test("should store a parameterized cache record", async () => {
-    const strReverse = (value: string) => value.split("").reverse().join("");
-    await cacheMemo("foo", strReverse, ["bar"]);
+    const concat = (...values: string[]) => values.join("");
+    await cacheMemo("foo", concat, ["bar", "baz"]);
 
     const record: CacheRecord = JSON.parse(
-      sessionStorage.getItem("test.cache_config.key_prefix.foo#bar") as string,
+      sessionStorage.getItem(
+        "test.cache_config.key_prefix.foo#bar:baz",
+      ) as string,
     );
-    expect(record.value).toBe("rab");
+    expect(record.value).toBe("barbaz");
   });
 
   test("should memoize a function", async () => {
@@ -276,8 +278,20 @@ describe("cacheMemo", () => {
     const fn = vitest.fn((value: number) => value);
 
     await cacheMemo("foo", fn, [1]); // Initial
-    await cacheMemo("foo", fn, [1]); // Memoized but expird
+    await cacheMemo("foo", fn, [1]); // Memoized but expired
 
     expect(fn).toHaveBeenCalledTimes(2);
+  });
+
+  test("should properly escape a cache key", async () => {
+    const concat = (...values: string[]) => values.join("");
+    await cacheMemo("foo#bar:baz", concat, ["bar", "baz"]);
+
+    const record: CacheRecord = JSON.parse(
+      sessionStorage.getItem(
+        "test.cache_config.key_prefix.foo%23bar%3Abaz#bar:baz",
+      ) as string,
+    );
+    expect(record.value).toBe("barbaz");
   });
 });
