@@ -94,7 +94,7 @@ describe("envCompare", () => {
     expect(envCompare("EXISTING_ENVVAR_STR", "bar", false)).toBeFalsy();
   });
 
-  test("should return trie when values are strictly equal", async () => {
+  test("should return true when values are strictly equal", async () => {
     import.meta.env.EXISTING_ENVVAR_BOOL = "true";
     import.meta.env.EXISTING_ENVVAR_NUMBER = "5";
     import.meta.env.EXISTING_ENVVAR_STR = "foo";
