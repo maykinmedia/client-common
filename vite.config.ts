@@ -21,7 +21,7 @@ const subLibraries = getSubLibraries(path.resolve(__dirname, "src"));
 // Create an object of entry points where each sub-library has its own entry file
 const entryPoints = subLibraries.reduce<Record<string, string>>(
   (acc, subLib) => {
-    acc[subLib] = path.resolve(__dirname, "src", subLib, `${subLib}.ts`);
+    acc[subLib] = path.resolve(__dirname, "src", subLib, `index.ts`);
     return acc;
   },
   { index: path.resolve(__dirname, "src", "index.ts") },
