@@ -148,5 +148,5 @@ function _getParameterizedKey(key: string, params?: Array<unknown>): string {
   if (!_params || !_params.length) {
     return key;
   }
-  return `${key}#${_params.join(":")}`;
+  return `${encodeURIComponent(key)}#${_params.join(":")}`;
 }
