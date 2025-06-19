@@ -5,7 +5,7 @@
  * The returned function has an additional `cancel` method to clear any pending
  * invocation.
  */
-export type DebouncedFunction<T extends (...args: unknown[]) => void> = {
+export type DebouncedFunction<T extends (...args: Parameters<T>) => void> = {
   /**
    * Invokes the debounced function.
    *
@@ -29,7 +29,7 @@ export type DebouncedFunction<T extends (...args: unknown[]) => void> = {
  * @param timeout - Delay in milliseconds before invoking `fn`. Defaults to 300.
  * @returns A debounced function with a `cancel` method.
  */
-export function debounce<T extends (...args: unknown[]) => void>(
+export function debounce<T extends (...args: Parameters<T>) => void>(
   fn: T,
   timeout = 300,
 ): DebouncedFunction<T> {
