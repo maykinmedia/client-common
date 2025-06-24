@@ -130,6 +130,9 @@ export function ucFirst(string: string): string {
 /**
  * Capitalizes the first letter of each word in the input string.
  *
+ * Note: for most cases: consider using `string2Title` which by default, removes
+ * hyphens and underscores.
+ *
  * @param string - The input string to transform.
  * @returns The title-cased string.
  */
@@ -228,7 +231,7 @@ export function whitespace2Hyphens(string: string): string {
 }
 
 /**
- * Replaces all hyphens in the input string with spaces.
+ * Replaces all hyphens and underscores in the input string with spaces.
  *
  * Existing whitespace characters (spaces, tabs, etc.) are preserved and unaffected.
  *
@@ -236,5 +239,5 @@ export function whitespace2Hyphens(string: string): string {
  * @returns A new string with all hyphens replaced by spaces.
  */
 export function hyphens2Whitespace(string: string): string {
-  return string.replace(/-+/g, " ");
+  return string.replace(/[-_]+/g, " ");
 }
