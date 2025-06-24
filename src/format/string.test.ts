@@ -217,36 +217,42 @@ describe("string2Title", () => {
     ["foo-barBaz", {}, "Foo Bar Baz"],
     [" foo-bar ", {}, " Foo Bar "],
     ["fooBar😁", {}, "Foo Bar😁"],
+    ["foo_bar", {}, "Foo Bar"],
 
     ["foo", { addSpaces: false }, "Foo"],
     ["foo-bar", { addSpaces: false }, "Foo Bar"],
     ["foo-barBaz", { addSpaces: false }, "Foo BarBaz"],
     [" foo-bar ", { addSpaces: false }, " Foo Bar "],
     ["fooBar😁", { addSpaces: false }, "FooBar😁"],
+    ["foo_bar", { addSpaces: false }, "Foo Bar"],
 
     ["foo", { hyphens2Whitespace: false }, "Foo"],
     ["foo-bar", { hyphens2Whitespace: false }, "Foo-bar"],
     ["foo-barBaz", { hyphens2Whitespace: false }, "Foo-bar Baz"],
     [" foo-bar ", { hyphens2Whitespace: false }, " Foo-bar "],
     ["fooBar😁", { hyphens2Whitespace: false }, "Foo Bar😁"],
+    ["foo_bar", { hyphens2Whitespace: false }, "Foo_bar"],
 
     ["foo", { lowerCase: true }, "foo"],
     ["foo-bar", { lowerCase: true }, "foo bar"],
     ["foo-barBaz", { lowerCase: true }, "foo bar baz"],
     [" foo-bar ", { lowerCase: true }, " foo bar "],
     ["fooBar😁", { lowerCase: true }, "foo bar😁"],
+    ["foo_bar", { lowerCase: true }, "foo bar"],
 
     ["foo", { title: false }, "foo"],
     ["foo-bar", { title: false }, "foo bar"],
     ["foo-barBaz", { title: false }, "foo bar Baz"],
     [" foo-bar ", { title: false }, " foo bar "],
     ["fooBar😁", { title: false }, "foo Bar😁"],
+    ["foo_bar", { title: false }, "foo bar"],
 
     ["foo", { ucFirst: true }, "Foo"],
     ["foo-bar", { ucFirst: true }, "Foo bar"],
     ["foo-barBaz", { ucFirst: true }, "Foo bar Baz"],
     [" foo-bar ", { ucFirst: true }, " Foo bar "],
     ["fooBar😁", { ucFirst: true }, "Foo Bar😁"],
+    ["foo_bar", { ucFirst: true }, "Foo bar"],
 
     ["foo", { addSpaces: true, lowerCase: true, ucFirst: true }, "Foo"],
     ["foo-bar", { addSpaces: true, lowerCase: true, ucFirst: true }, "Foo bar"],
@@ -265,6 +271,7 @@ describe("string2Title", () => {
       { addSpaces: true, lowerCase: true, ucFirst: true },
       "Foo bar😁",
     ],
+    ["foo_bar", { addSpaces: true, lowerCase: true, ucFirst: true }, "Foo bar"],
   ] as [string, String2TitleOptions, string][])(
     'title("%s") => "%s"',
     (input, options: String2TitleOptions, expected) => {

@@ -10,6 +10,9 @@
 
 Capitalizes the first letter of each word in the input string.
 
+Note: for most cases: consider using `string2Title` which by default, removes
+hyphens and underscores.
+
 ## Parameters
 
 ### string

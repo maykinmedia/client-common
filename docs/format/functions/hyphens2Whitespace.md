@@ -8,7 +8,7 @@
 
 > **hyphens2Whitespace**(`string`): `string`
 
-Replaces all hyphens in the input string with spaces.
+Replaces all hyphens and underscores in the input string with spaces.
 
 Existing whitespace characters (spaces, tabs, etc.) are preserved and unaffected.
 
