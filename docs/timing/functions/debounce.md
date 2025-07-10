@@ -2,7 +2,7 @@
 
 ***
 
-[@maykin-ui/client-common](../../README.md) / [debounce](../README.md) / debounce
+[@maykin-ui/client-common](../../README.md) / [timing](../README.md) / debounce
 
 # Function: debounce()
 
