@@ -2,7 +2,7 @@
 
 ***
 
-[@maykin-ui/client-common](../../README.md) / [debounce](../README.md) / DebouncedFunction
+[@maykin-ui/client-common](../../README.md) / [timing](../README.md) / DebouncedFunction
 
 # Type Alias: DebouncedFunction()\<T\>
 

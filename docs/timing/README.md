@@ -2,9 +2,9 @@
 
 ***
 
-[@maykin-ui/client-common](../README.md) / debounce
+[@maykin-ui/client-common](../README.md) / timing
 
-# debounce
+# timing
 
 ## Type Aliases
 
@@ -13,3 +13,4 @@
 ## Functions
 
 - [debounce](functions/debounce.md)
+- [delay](functions/delay.md)

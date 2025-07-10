@@ -2,7 +2,7 @@
 
 ***
 
-[@maykin-ui/client-common](../../README.md) / [delay](../README.md) / delay
+[@maykin-ui/client-common](../../README.md) / [timing](../README.md) / delay
 
 # Function: delay()
 
