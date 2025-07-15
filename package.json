@@ -47,6 +47,11 @@
       "import": "./dist/es/env.js",
       "require": "./dist/cjs/env.js"
     },
+    "./form": {
+      "types": "./dist/types/form/form.d.ts",
+      "import": "./dist/es/form.js",
+      "require": "./dist/cjs/form.js"
+    },
     "./format": {
       "types": "./dist/types/format/format.d.ts",
       "import": "./dist/es/format.js",
