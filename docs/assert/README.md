@@ -10,3 +10,4 @@
 
 - [deprecated](functions/deprecated.md)
 - [invariant](functions/invariant.md)
+- [notImplemented](functions/notImplemented.md)

@@ -45,6 +45,20 @@ export function invariant(
 }
 
 /**
+ * Throws an error for unimplemented functionality.
+ *
+ * @param feature - The name of the feature or method that is not implemented.
+ * @throws Error Always throws to indicate the method is not implemented.
+ */
+export function notImplemented(feature?: string) {
+  throwOrWarn(
+    "NOT_IMPLEMENTED",
+    `${feature ?? "Feature"} is not implemented`,
+    true,
+  );
+}
+
+/**
  * Throws an error or logs a warning depending on `throwError`.
  *
  * @param type - The message type (e.g. "deprecated" or invariant").

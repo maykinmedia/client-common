@@ -1,7 +1,7 @@
 import { MockInstance, beforeEach, expect } from "vitest";
 
 import * as env from "../env";
-import { deprecated, invariant } from "./assert.ts";
+import { deprecated, invariant, notImplemented } from "./assert.ts";
 
 let spy: MockInstance;
 
@@ -74,6 +74,34 @@ describe("invariant", () => {
   test("allow message to be omitted", () => {
     expect(() => invariant(false)).toThrowError(
       "INVARIANT: Invariant violation",
+    );
+  });
+});
+
+describe("notImplemented", () => {
+  test("throws with feature name in message", () => {
+    expect(() => notImplemented("CoolFeature")).toThrowError(
+      "NOT_IMPLEMENTED: CoolFeature is not implemented",
+    );
+  });
+
+  test("throws with default message", () => {
+    expect(() => notImplemented()).toThrowError(
+      "NOT_IMPLEMENTED: Feature is not implemented",
+    );
+  });
+
+  test("throws in development build", () => {
+    vi.spyOn(env, "isDevelopmentBuild").mockReturnValue(true);
+    expect(() => notImplemented("TestFeature")).toThrowError(
+      "NOT_IMPLEMENTED: TestFeature is not implemented",
+    );
+  });
+
+  test("throws in production build", () => {
+    vi.spyOn(env, "isDevelopmentBuild").mockReturnValue(false);
+    expect(() => notImplemented("ProdFeature")).toThrowError(
+      "NOT_IMPLEMENTED: ProdFeature is not implemented",
     );
   });
 });
