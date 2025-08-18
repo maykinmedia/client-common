@@ -1,8 +1,34 @@
 import { notImplemented } from "../assert";
 
 export type SerializeOptions = {
+  /**
+   * Whether to shorten checkbox arrays when serializing.
+   *
+   * - Default: `true`.
+   * - If `true` (default), only the selected values are included in the array,
+   *   producing a compact array like `["foo", "bar"]`. This is preferred for form serialization.
+   * - If `false`, the array preserves the original checkbox states,
+   *   including `true` for selected and `false` for unselected values, e.g., `[true, false, true]`.
+   *   This is useful if index-based access is required, for example in validation lookups.
+   */
+  trimCheckboxArray: boolean;
+
   /** Whether to return typed values  according the input types. */
-  typed?: boolean;
+  typed: boolean;
+};
+
+/**
+ * Returns the final options including defaults.
+ * @param options - The user options.
+ */
+export const parseOptions = (
+  options?: Partial<SerializeOptions>,
+): SerializeOptions => {
+  const baseOptions = {
+    trimCheckboxArray: true,
+    typed: false,
+  };
+  return Object.assign(baseOptions, options || {});
 };
 
 /**
@@ -18,10 +44,11 @@ export type SerializeOptions = {
  */
 export const serializeFormElement = <T extends Record<string, unknown>>(
   form: HTMLFormElement,
-  options?: SerializeOptions,
+  options?: Partial<SerializeOptions>,
 ): T => {
   const elements = form.elements;
   const data: T = {} as T;
+  const parsedOptions = parseOptions(options);
 
   for (const element of elements) {
     const name = element.getAttribute("name");
@@ -29,7 +56,7 @@ export const serializeFormElement = <T extends Record<string, unknown>>(
 
     const key = name as keyof T;
     const formControl = elements.namedItem(name) as Element | RadioNodeList;
-    data[key] = serializeElement(formControl, options) as T[keyof T];
+    data[key] = serializeElement(formControl, parsedOptions) as T[keyof T];
   }
   return data;
 };
@@ -46,16 +73,18 @@ export const serializeFormElement = <T extends Record<string, unknown>>(
  */
 export const serializeElement = (
   element: Element | RadioNodeList,
-  options?: SerializeOptions,
+  options?: Partial<SerializeOptions>,
 ) => {
+  const parsedOptions = parseOptions(options);
+
   if (element instanceof HTMLInputElement) {
-    return serializeInputElement(element, options);
+    return serializeInputElement(element, parsedOptions);
   } else if (element instanceof HTMLSelectElement) {
     return serializeSelectElement(element);
   } else if (element instanceof HTMLTextAreaElement) {
     return serializeTextAreaElement(element);
   } else if (element instanceof RadioNodeList) {
-    return serializeRadioNodeList(element, options);
+    return serializeRadioNodeList(element, parsedOptions);
   }
 
   // Explicitly not returning a value.
@@ -74,7 +103,7 @@ export const serializeElement = (
  */
 export const serializeInputElement = (
   input: HTMLInputElement,
-  options?: SerializeOptions,
+  options?: Partial<SerializeOptions>,
 ) => {
   if (options?.typed) {
     switch (input.type) {
@@ -155,9 +184,11 @@ export const serializeTextAreaElement = (textArea: HTMLTextAreaElement) => {
  */
 export const serializeRadioNodeList = (
   radioNodeList: RadioNodeList,
-  options?: SerializeOptions,
+  options?: Partial<SerializeOptions>,
 ): string | string[] | undefined => {
+  const parsedOptions = parseOptions(options);
   const value = radioNodeList.value;
+
   if (value) return value; // One selected value found.
 
   // Convert NodeList to array
@@ -174,9 +205,14 @@ export const serializeRadioNodeList = (
   const checkboxes = inputs.filter((n) => n.type === "checkbox");
   if (checkboxes.length) {
     return checkboxes
-      .filter((n) => n.checked)
+      .filter((n) => !parsedOptions?.trimCheckboxArray || n.checked)
       .map((i) =>
-        serializeInputElement(i, { ...options, typed: false }),
+        serializeInputElement(
+          i,
+          parsedOptions.trimCheckboxArray
+            ? { ...parsedOptions, typed: false }
+            : parsedOptions,
+        ),
       ) as string[];
   }
 
@@ -188,5 +224,5 @@ export const serializeRadioNodeList = (
       n instanceof HTMLTextAreaElement,
   );
 
-  return elements.map((e) => serializeElement(e, options)) as string[];
+  return elements.map((e) => serializeElement(e, parsedOptions)) as string[];
 };
