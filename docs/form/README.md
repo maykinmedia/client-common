@@ -12,6 +12,7 @@
 
 ## Functions
 
+- [parseOptions](functions/parseOptions.md)
 - [serializeElement](functions/serializeElement.md)
 - [serializeFormElement](functions/serializeFormElement.md)
 - [serializeInputElement](functions/serializeInputElement.md)

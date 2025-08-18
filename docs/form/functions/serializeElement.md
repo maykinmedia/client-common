@@ -23,7 +23,7 @@ The form control or RadioNodeList to serialize.
 
 ### options?
 
-[`SerializeOptions`](../type-aliases/SerializeOptions.md)
+`Partial`\<[`SerializeOptions`](../type-aliases/SerializeOptions.md)\>
 
 Options for serialization.
 

@@ -200,6 +200,36 @@ describe("serializeFormElement", () => {
         checkbox: ["2", "3"],
       });
     });
+
+    test("should preserve original checkbox order when not using trimCheckboxArray", () => {
+      const form = elementFactory<HTMLFormElement>("form");
+      elementFactory<HTMLInputElement>(
+        "input",
+        { name: "checkbox", type: "checkbox", value: "1" },
+        form,
+      );
+
+      elementFactory<HTMLInputElement>(
+        "input",
+        { name: "checkbox", type: "checkbox", value: "2", checked: "true" },
+        form,
+      );
+
+      elementFactory<HTMLInputElement>(
+        "input",
+        { name: "checkbox", type: "checkbox", value: "3", checked: "true" },
+        form,
+      );
+
+      expect(serializeFormElement(form, { trimCheckboxArray: false })).toEqual({
+        checkbox: [undefined, "2", "3"],
+      });
+      expect(
+        serializeFormElement(form, { trimCheckboxArray: false, typed: true }),
+      ).toEqual({
+        checkbox: [false, true, true],
+      });
+    });
   });
 
   describe("radio", () => {

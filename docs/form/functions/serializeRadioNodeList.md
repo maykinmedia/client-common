@@ -28,7 +28,7 @@ The RadioNodeList to serialize.
 
 ### options?
 
-[`SerializeOptions`](../type-aliases/SerializeOptions.md)
+`Partial`\<[`SerializeOptions`](../type-aliases/SerializeOptions.md)\>
 
 Options for serialisation.
 
