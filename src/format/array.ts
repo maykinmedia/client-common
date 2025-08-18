@@ -10,12 +10,12 @@
  * @param priority - Whether to prefer the first or last occurrence of duplicates
  * @returns A new array with unique elements
  */
-export const distinctArray = <T extends object>(
-  array: T[],
-  key: keyof T,
+export const distinctArray = <T, K extends keyof T>(
+  array: ReadonlyArray<T>,
+  key: K,
   priority: "first" | "last" = "last",
-) => {
-  const map: Map<T[typeof key], T> = new Map();
+): T[] => {
+  const map = new Map<T[K], T>();
 
   for (const obj of array) {
     const keyValue = obj[key];
