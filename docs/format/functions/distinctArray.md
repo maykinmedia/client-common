@@ -6,7 +6,7 @@
 
 # Function: distinctArray()
 
-> **distinctArray**\<`T`\>(`array`, `key`, `priority`): `T`[]
+> **distinctArray**\<`T`, `K`\>(`array`, `key`, `priority`): `T`[]
 
 Returns a new array with duplicates removed, based on the given key.
 
@@ -17,21 +17,25 @@ Returns a new array with duplicates removed, based on the given key.
 
 ### T
 
-`T` *extends* `object`
+`T`
 
 Element type of the array
+
+### K
+
+`K` *extends* `string` \| `number` \| `symbol`
 
 ## Parameters
 
 ### array
 
-`T`[]
+readonly `T`[]
 
 Input array
 
 ### key
 
-keyof `T`
+`K`
 
 Property key used to determine uniqueness
 
