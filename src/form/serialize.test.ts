@@ -1,6 +1,6 @@
 import { describe, expect } from "vitest";
 
-import { serializeFormElement } from "./serialize.ts";
+import { serializeFormElement, serializeInputElement } from "./serialize.ts";
 
 /**
  * Creates a new `tagName` with `attrs`, optionally as child of `parent`.
@@ -54,7 +54,7 @@ describe("serializeFormElement", () => {
       ${{ name: "checkbox", type: "checkbox", checked: true }}                   | ${"boolean"}   | ${true}
       ${{ name: "checkbox", type: "checkbox" }}                                  | ${"boolean"}   | ${false}
       ${{ name: "radio", type: "radio", value: "538", checked: true }}           | ${"string"}    | ${"538"}
-      ${{ name: "radio", type: "radio", value: "538" }}                          | ${"undefined"} | ${undefined}
+      ${{ name: "radio", type: "radio", value: "538" }}                          | ${"object"}    | ${null}
       ${{ name: "data", type: "date", value: "2023-09-15" }}                     | ${"object"}    | ${date}
       ${{ name: "datetime", type: "datetime-local", value: "2023-09-15T21:36" }} | ${"object"}    | ${dateTime}
       ${{ name: "number", type: "number", value: "15" }}                         | ${"number"}    | ${15}
@@ -453,4 +453,52 @@ describe("serializeFormElement", () => {
       expect(data).toEqual({ input: "foo" });
     });
   });
+});
+
+describe("Issue #20 - Calling serializeInputElement returns incorrect values for empty inputs when in typed mode", () => {
+  test.each`
+    attrs                                                           | expected
+    ${{ name: "radio", type: "radio" }}                             | ${null}
+    ${{ name: "date", type: "date" }}                               | ${null}
+    ${{ name: "datetime-local", type: "datetime-local" }}           | ${null}
+    ${{ name: "number", type: "number" }}                           | ${null}
+    ${{ name: "checkbox", type: "checkbox" }}                       | ${false}
+    ${{ name: "range", type: "range", min: 0, max: 10, value: "" }} | ${5}
+    ${{ name: "range", type: "text" }}                              | ${""}
+  `(
+    "calling serializeInputElement should return $expected for an emtpy $attrs.type input without options.typedFallback set",
+    ({ attrs, expected }) => {
+      const form = elementFactory<HTMLFormElement>("form");
+      const input = elementFactory<HTMLInputElement>("input", attrs, form);
+      expect(serializeInputElement(input, { typed: true })).toEqual(expected);
+      expect(serializeFormElement(form, { typed: true })).toEqual({
+        [attrs.name]: expected,
+      });
+    },
+  );
+
+  test.each`
+    attrs                                                           | expected
+    ${{ name: "radio", type: "radio" }}                             | ${undefined}
+    ${{ name: "date", type: "date" }}                               | ${undefined}
+    ${{ name: "datetime-local", type: "datetime-local" }}           | ${undefined}
+    ${{ name: "number", type: "number" }}                           | ${undefined}
+    ${{ name: "checkbox", type: "checkbox" }}                       | ${false}
+    ${{ name: "range", type: "range", min: 0, max: 10, value: "" }} | ${5}
+    ${{ name: "range", type: "text" }}                              | ${""}
+  `(
+    "calling serializeInputElement should return options.typedFallback for an emtpy $attrs.type input",
+    ({ attrs, expected }) => {
+      const form = elementFactory<HTMLFormElement>("form");
+      const input = elementFactory<HTMLInputElement>("input", attrs, form);
+      expect(
+        serializeInputElement(input, { typed: true, typedFallback: undefined }),
+      ).toEqual(expected);
+      expect(
+        serializeFormElement(form, { typed: true, typedFallback: undefined }),
+      ).toEqual({
+        [attrs.name]: expected,
+      });
+    },
+  );
 });
