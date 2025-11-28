@@ -15,6 +15,9 @@ export type SerializeOptions = {
 
   /** Whether to return typed values  according the input types. */
   typed: boolean;
+
+  /** Fallback when serializing an empty typed input. */
+  typedFallback: unknown;
 };
 
 /**
@@ -27,6 +30,7 @@ export const parseOptions = (
   const baseOptions = {
     trimCheckboxArray: true,
     typed: false,
+    typedFallback: null,
   };
   return Object.assign(baseOptions, options || {});
 };
@@ -105,19 +109,26 @@ export const serializeInputElement = (
   input: HTMLInputElement,
   options?: Partial<SerializeOptions>,
 ) => {
-  if (options?.typed) {
+  const parsedOptions = parseOptions(options);
+  if (parsedOptions?.typed) {
     switch (input.type) {
       case "checkbox":
         return input.checked;
 
       case "radio":
-        return input.checked ? input.value : undefined;
+        return input.checked ? input.value : parsedOptions.typedFallback;
 
       case "date":
       case "datetime-local":
-        return new Date(input.value);
+        return input.value === ""
+          ? parsedOptions.typedFallback
+          : new Date(input.value);
 
       case "number":
+        return input.value === ""
+          ? parsedOptions.typedFallback
+          : parseInt(input.value);
+
       case "range":
         return parseInt(input.value);
 
