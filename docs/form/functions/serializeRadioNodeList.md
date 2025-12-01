@@ -6,7 +6,7 @@
 
 # Function: serializeRadioNodeList()
 
-> **serializeRadioNodeList**(`radioNodeList`, `options`?): `undefined` \| `string` \| `string`[]
+> **serializeRadioNodeList**\<`TypedFallback`, `SO`\>(`radioNodeList`, `options`?): `undefined` \| `string` \| `string`[] \| (`string` \| `number` \| `boolean` \| `Date` \| `TypedFallback`)[]
 
 Serializes a RadioNodeList, which can represent radios, checkboxes, or other grouped inputs.
 
@@ -18,6 +18,20 @@ Behavior:
 Note: RadioNodeList includes all elements sharing the same `name` attribute,
 not only radio buttons.
 
+## Type Parameters
+
+### TypedFallback
+
+`TypedFallback`
+
+Type of value to for empty inputs when typed.
+
+### SO
+
+`SO` *extends* `Partial`\<[`SerializeOptions`](../type-aliases/SerializeOptions.md)\<`TypedFallback`\>\>
+
+Serialization options.
+
 ## Parameters
 
 ### radioNodeList
@@ -28,12 +42,12 @@ The RadioNodeList to serialize.
 
 ### options?
 
-`Partial`\<[`SerializeOptions`](../type-aliases/SerializeOptions.md)\>
+`SO`
 
-Options for serialisation.
+Options for serialization.
 
 ## Returns
 
-`undefined` \| `string` \| `string`[]
+`undefined` \| `string` \| `string`[] \| (`string` \| `number` \| `boolean` \| `Date` \| `TypedFallback`)[]
 
 A string, an array of strings, or undefined depending on input type and selection.

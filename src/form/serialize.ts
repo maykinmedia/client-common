@@ -1,6 +1,9 @@
 import { notImplemented } from "../assert";
 
-export type SerializeOptions = {
+/**
+ * Type for serialisation options.
+ */
+export type SerializeOptions<TypedFallback = null> = {
   /**
    * Whether to shorten checkbox arrays when serializing.
    *
@@ -17,20 +20,38 @@ export type SerializeOptions = {
   typed: boolean;
 
   /** Fallback when serializing an empty typed input. */
-  typedFallback: unknown;
+  typedFallback: TypedFallback;
 };
 
 /**
+ * Type for a single input value based on `typed` and `typedFallback` members of
+ * `SO` (SerializeOptions).
+ */
+type SerializedValue<SO> = SO extends {
+  typed: infer Typed; // Check whether `typed` is set.
+}
+  ? Typed extends true // Check whether `typed` is true.
+    ? SO extends { typedFallback: infer TypedFallback } // Check whether `typedFallback` is set.
+      ? boolean | string | number | Date | TypedFallback // Use `typedFallback` in union.
+      : boolean | string | number | Date | null // Use `null` (default) in union.
+    : string // `typed` is falsy, use `string` as type.
+  : string; // `typed` is not set, use `string` as type.
+
+/**
  * Returns the final options including defaults.
+ * @typeParam TypedFallback - Fallback when serializing an empty typed input.
  * @param options - The user options.
  */
-export const parseOptions = (
-  options?: Partial<SerializeOptions>,
-): SerializeOptions => {
-  const baseOptions = {
+export const parseOptions = <
+  TypedFallback,
+  SO extends Partial<SerializeOptions<TypedFallback>>,
+>(
+  options?: SO,
+): SerializeOptions<TypedFallback> => {
+  const baseOptions: SerializeOptions<TypedFallback> = {
     trimCheckboxArray: true,
     typed: false,
-    typedFallback: null,
+    typedFallback: null as TypedFallback,
   };
   return Object.assign(baseOptions, options || {});
 };
@@ -41,15 +62,34 @@ export const parseOptions = (
  * Iterates over all named elements in the form and maps each serialized value to its
  * corresponding key in the returned object.
  *
+ * @typeParam TypedFallback - Type of value to for empty inputs when typed.
+ * @typeParam SO - Serialization options.
  * @typeParam T - The expected structure of the output object.
  * @param form - The HTMLFormElement instance to serialize.
- * @param options - Options for serialisation.
+ * @param options - Options for serialization.
  * @returns An object of type T containing serialized form data keyed by element names.
  */
-export const serializeFormElement = <T extends Record<string, unknown>>(
-  form: HTMLFormElement,
-  options?: Partial<SerializeOptions>,
-): T => {
+export function serializeFormElement<
+  TypedFallback,
+  SO extends Partial<SerializeOptions<TypedFallback>> & {
+    typed: true;
+  },
+  T = Record<string, SerializedValue<SO>>,
+>(form: HTMLFormElement, options: SO): T;
+
+export function serializeFormElement<
+  TypedFallback,
+  SO extends Partial<SerializeOptions<TypedFallback>> & {
+    typed?: boolean;
+  } = Partial<SerializeOptions<TypedFallback>> & { typed?: false },
+  T = Record<string, SerializedValue<SO>>,
+>(form: HTMLFormElement, options?: SO): T;
+
+export function serializeFormElement<
+  TypedFallback,
+  SO extends Partial<SerializeOptions<TypedFallback>>,
+  T = Record<string, SerializedValue<SO>>,
+>(form: HTMLFormElement, options?: SO): T {
   const elements = form.elements;
   const data: T = {} as T;
   const parsedOptions = parseOptions(options);
@@ -58,12 +98,14 @@ export const serializeFormElement = <T extends Record<string, unknown>>(
     const name = element.getAttribute("name");
     if (!name) continue;
 
-    const key = name as keyof T;
     const formControl = elements.namedItem(name) as Element | RadioNodeList;
-    data[key] = serializeElement(formControl, parsedOptions) as T[keyof T];
+    const key = name as keyof T;
+    const value = serializeElement(formControl, parsedOptions);
+
+    data[key] = value as T[keyof T];
   }
   return data;
-};
+}
 
 /**
  * Serializes a single form control element or group of controls.
@@ -71,15 +113,31 @@ export const serializeFormElement = <T extends Record<string, unknown>>(
  * Determines the element type and delegates to the appropriate serialization function.
  * Currently, supports input, select, textarea, and RadioNodeList elements.
  *
+ * @typeParam TypedFallback - Type of value to for empty inputs when typed.
+ * @typeParam SO - Serialization options.
  * @param element - The form control or RadioNodeList to serialize.
  * @param options - Options for serialization.
  * @returns The serialized value of the element, or undefined if unsupported.
  */
-export const serializeElement = (
-  element: Element | RadioNodeList,
-  options?: Partial<SerializeOptions>,
-) => {
-  const parsedOptions = parseOptions(options);
+export function serializeElement<
+  TypedFallback,
+  SO extends Partial<SerializeOptions<TypedFallback>> & {
+    typed: true;
+  },
+>(element: Element | RadioNodeList, options: SO): SerializedValue<SO>;
+
+export function serializeElement<
+  TypedFallback,
+  SO extends Partial<SerializeOptions<TypedFallback>> & {
+    typed?: boolean;
+  },
+>(element: Element | RadioNodeList, options?: SO): SerializedValue<SO>;
+
+export function serializeElement<
+  TypedFallback,
+  SO extends Partial<SerializeOptions<TypedFallback>>,
+>(element: Element | RadioNodeList, options?: SO) {
+  const parsedOptions = parseOptions<TypedFallback, SO>(options);
 
   if (element instanceof HTMLInputElement) {
     return serializeInputElement(element, parsedOptions);
@@ -93,7 +151,7 @@ export const serializeElement = (
 
   // Explicitly not returning a value.
   return undefined;
-};
+}
 
 /**
  * Serializes an individual HTMLInputElement.
@@ -101,14 +159,30 @@ export const serializeElement = (
  * For checkboxes and radios, only returns a value if checked.
  * Otherwise, returns the input's value.
  *
+ * @typeParam TypedFallback - Type of value to for empty inputs when typed.
+ * @typeParam SO - Serialization options.
  * @param input - The input element to serialize.
- * @param options - Options for serialisation.
+ * @param options - Options for serialization.
  * @returns The input's value or undefined if unchecked checkbox/radio.
  */
-export const serializeInputElement = (
-  input: HTMLInputElement,
-  options?: Partial<SerializeOptions>,
-) => {
+export function serializeInputElement<
+  TypedFallback,
+  SO extends Partial<SerializeOptions<TypedFallback>> & {
+    typed: true;
+  },
+>(input: HTMLInputElement, options: SO): SerializedValue<SO>;
+
+export function serializeInputElement<
+  TypedFallback,
+  SO extends Partial<SerializeOptions<TypedFallback>> & {
+    typed?: boolean;
+  },
+>(input: HTMLInputElement, options?: SO): SerializedValue<SO>;
+
+export function serializeInputElement<
+  TypedFallback,
+  SO extends Partial<SerializeOptions<TypedFallback>>,
+>(input: HTMLInputElement, options?: SO) {
   const parsedOptions = parseOptions(options);
   if (parsedOptions?.typed) {
     switch (input.type) {
@@ -149,7 +223,7 @@ export const serializeInputElement = (
   }
 
   return input.value;
-};
+}
 
 /**
  * Serializes an HTMLSelectElement.
@@ -189,15 +263,24 @@ export const serializeTextAreaElement = (textArea: HTMLTextAreaElement) => {
  * Note: RadioNodeList includes all elements sharing the same `name` attribute,
  * not only radio buttons.
  *
+ * @typeParam TypedFallback - Type of value to for empty inputs when typed.
+ * @typeParam SO - Serialization options.
  * @param radioNodeList - The RadioNodeList to serialize.
- * @param options - Options for serialisation.
+ * @param options - Options for serialization.
  * @returns A string, an array of strings, or undefined depending on input type and selection.
  */
-export const serializeRadioNodeList = (
+export const serializeRadioNodeList = <
+  TypedFallback,
+  SO extends Partial<SerializeOptions<TypedFallback>>,
+>(
   radioNodeList: RadioNodeList,
-  options?: Partial<SerializeOptions>,
-): string | string[] | undefined => {
-  const parsedOptions = parseOptions(options);
+  options?: SO,
+):
+  | string
+  | string[]
+  | undefined
+  | (string | number | boolean | TypedFallback | Date)[] => {
+  const parsedOptions = parseOptions<TypedFallback, SO>(options);
   const value = radioNodeList.value;
 
   if (value) return value; // One selected value found.
@@ -235,5 +318,5 @@ export const serializeRadioNodeList = (
       n instanceof HTMLTextAreaElement,
   );
 
-  return elements.map((e) => serializeElement(e, parsedOptions)) as string[];
+  return elements.map((e) => serializeElement(e, parsedOptions));
 };

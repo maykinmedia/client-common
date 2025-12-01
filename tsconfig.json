@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noErrorTruncation": true,
     "target": "ES2023",
     "useDefineForClassFields": true,
     "module": "ESNext",

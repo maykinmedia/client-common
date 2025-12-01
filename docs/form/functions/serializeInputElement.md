@@ -6,29 +6,88 @@
 
 # Function: serializeInputElement()
 
-> **serializeInputElement**(`input`, `options`?): `string` \| `number` \| `boolean` \| `void` \| `Date`
+## Call Signature
+
+> **serializeInputElement**\<`TypedFallback`, `SO`\>(`input`, `options`): `SerializedValue`\<`SO`\>
 
 Serializes an individual HTMLInputElement.
 
 For checkboxes and radios, only returns a value if checked.
 Otherwise, returns the input's value.
 
-## Parameters
+### Type Parameters
 
-### input
+#### TypedFallback
+
+`TypedFallback`
+
+Type of value to for empty inputs when typed.
+
+#### SO
+
+`SO` *extends* `Partial`\<[`SerializeOptions`](../type-aliases/SerializeOptions.md)\<`TypedFallback`\>\> & `object`
+
+Serialization options.
+
+### Parameters
+
+#### input
 
 `HTMLInputElement`
 
 The input element to serialize.
 
-### options?
+#### options
 
-`Partial`\<[`SerializeOptions`](../type-aliases/SerializeOptions.md)\>
+`SO`
 
-Options for serialisation.
+Options for serialization.
 
-## Returns
+### Returns
 
-`string` \| `number` \| `boolean` \| `void` \| `Date`
+`SerializedValue`\<`SO`\>
+
+The input's value or undefined if unchecked checkbox/radio.
+
+## Call Signature
+
+> **serializeInputElement**\<`TypedFallback`, `SO`\>(`input`, `options`?): `SerializedValue`\<`SO`\>
+
+Serializes an individual HTMLInputElement.
+
+For checkboxes and radios, only returns a value if checked.
+Otherwise, returns the input's value.
+
+### Type Parameters
+
+#### TypedFallback
+
+`TypedFallback`
+
+Type of value to for empty inputs when typed.
+
+#### SO
+
+`SO` *extends* `Partial`\<[`SerializeOptions`](../type-aliases/SerializeOptions.md)\<`TypedFallback`\>\> & `object`
+
+Serialization options.
+
+### Parameters
+
+#### input
+
+`HTMLInputElement`
+
+The input element to serialize.
+
+#### options?
+
+`SO`
+
+Options for serialization.
+
+### Returns
+
+`SerializedValue`\<`SO`\>
 
 The input's value or undefined if unchecked checkbox/radio.

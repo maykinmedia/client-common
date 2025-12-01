@@ -4,9 +4,17 @@
 
 [@maykin-ui/client-common](../../README.md) / [form](../README.md) / SerializeOptions
 
-# Type Alias: SerializeOptions
+# Type Alias: SerializeOptions\<TypedFallback\>
 
-> **SerializeOptions** = `object`
+> **SerializeOptions**\<`TypedFallback`\> = `object`
+
+Type for serialisation options.
+
+## Type Parameters
+
+### TypedFallback
+
+`TypedFallback` = `null`
 
 ## Properties
 
@@ -30,3 +38,11 @@ Whether to shorten checkbox arrays when serializing.
 > **typed**: `boolean`
 
 Whether to return typed values  according the input types.
+
+***
+
+### typedFallback
+
+> **typedFallback**: `TypedFallback`
+
+Fallback when serializing an empty typed input.
