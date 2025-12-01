@@ -1,4 +1,4 @@
-name: Checks
+name: Run CI build and tests
 
 # Run this workflow every time a new commit pushed to your repository
 on:
@@ -20,13 +20,14 @@ concurrency:
 
 jobs:
   build:
+    name: Create 'production' build
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build source
         env:
@@ -36,7 +37,15 @@ jobs:
       - name: build package
         run: npm pack
 
+      - name: Store build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: maykin-ui-client-common-*.tgz
+          retention-days: 1
+
   commitlint:
+    name: Validate the commit messages
     runs-on: ubuntu-latest
 
     steps:
@@ -53,20 +62,21 @@ jobs:
         if: github.event_name == 'pull_request'
         run: npx commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
-
   lint:
+    name: Run linters
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run linters
         run: npm run lint
 
   test:
+    name: Run tests
     runs-on: ubuntu-latest
 
     steps:
@@ -88,3 +98,64 @@ jobs:
           flags: vitest
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  publish:
+    name: Publish the NPM package
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - commitlint
+      - lint
+      - test
+
+    # do not publish in forks or non-tag pushes
+    if: startsWith(github.ref, 'refs/tags/') && github.repository_owner == 'maykinmedia'
+
+    environment:
+      name: release
+      url: https://www.npmjs.com/package/@maykin-ui/client-common
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Update NPM
+        run: npm install -g npm@latest
+
+      - name: Download build artifact
+        id: download
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: artifacts
+
+      - name: Publish package to NPM
+        run: |
+          shopt -s nocasematch
+
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="latest"
+
+          if [[ "$VERSION" == *alpha* ]]; then
+            TAG="alpha"
+          elif [[ "$VERSION" == *beta* ]]; then
+            TAG="beta"
+          fi
+
+          cd artifacts/
+
+          FILE=$(ls *.tgz)
+
+          file $FILE
+          echo "Publishing $FILE with version $VERSION and tag $TAG"
+          npm publish "$FILE" --access public --tag $TAG
