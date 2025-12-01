@@ -6,18 +6,30 @@
 
 # Function: parseOptions()
 
-> **parseOptions**(`options`?): [`SerializeOptions`](../type-aliases/SerializeOptions.md)
+> **parseOptions**\<`TypedFallback`, `SO`\>(`options`?): [`SerializeOptions`](../type-aliases/SerializeOptions.md)\<`TypedFallback`\>
 
 Returns the final options including defaults.
+
+## Type Parameters
+
+### TypedFallback
+
+`TypedFallback`
+
+Fallback when serializing an empty typed input.
+
+### SO
+
+`SO` *extends* `Partial`\<[`SerializeOptions`](../type-aliases/SerializeOptions.md)\<`TypedFallback`\>\>
 
 ## Parameters
 
 ### options?
 
-`Partial`\<[`SerializeOptions`](../type-aliases/SerializeOptions.md)\>
+`SO`
 
 The user options.
 
 ## Returns
 
-[`SerializeOptions`](../type-aliases/SerializeOptions.md)
+[`SerializeOptions`](../type-aliases/SerializeOptions.md)\<`TypedFallback`\>

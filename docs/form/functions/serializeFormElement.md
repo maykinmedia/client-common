@@ -6,36 +6,99 @@
 
 # Function: serializeFormElement()
 
-> **serializeFormElement**\<`T`\>(`form`, `options`?): `T`
+## Call Signature
+
+> **serializeFormElement**\<`TypedFallback`, `SO`, `T`\>(`form`, `options`): `T`
 
 Serializes an HTML form into a typed object by collecting values from all named form controls.
 
 Iterates over all named elements in the form and maps each serialized value to its
 corresponding key in the returned object.
 
-## Type Parameters
+### Type Parameters
 
-### T
+#### TypedFallback
 
-`T` *extends* `Record`\<`string`, `unknown`\>
+`TypedFallback`
+
+Type of value to for empty inputs when typed.
+
+#### SO
+
+`SO` *extends* `Partial`\<[`SerializeOptions`](../type-aliases/SerializeOptions.md)\<`TypedFallback`\>\> & `object`
+
+Serialization options.
+
+#### T
+
+`T` = `Record`\<`string`, `SerializedValue`\<`SO`\>\>
 
 The expected structure of the output object.
 
-## Parameters
+### Parameters
 
-### form
+#### form
 
 `HTMLFormElement`
 
 The HTMLFormElement instance to serialize.
 
-### options?
+#### options
 
-`Partial`\<[`SerializeOptions`](../type-aliases/SerializeOptions.md)\>
+`SO`
 
-Options for serialisation.
+Options for serialization.
 
-## Returns
+### Returns
+
+`T`
+
+An object of type T containing serialized form data keyed by element names.
+
+## Call Signature
+
+> **serializeFormElement**\<`TypedFallback`, `SO`, `T`\>(`form`, `options`?): `T`
+
+Serializes an HTML form into a typed object by collecting values from all named form controls.
+
+Iterates over all named elements in the form and maps each serialized value to its
+corresponding key in the returned object.
+
+### Type Parameters
+
+#### TypedFallback
+
+`TypedFallback`
+
+Type of value to for empty inputs when typed.
+
+#### SO
+
+`SO` *extends* `Partial`\<[`SerializeOptions`](../type-aliases/SerializeOptions.md)\<`TypedFallback`\>\> & `object` = `Partial`\<[`SerializeOptions`](../type-aliases/SerializeOptions.md)\<`TypedFallback`\>\> & `object`
+
+Serialization options.
+
+#### T
+
+`T` = `Record`\<`string`, `SerializedValue`\<`SO`\>\>
+
+The expected structure of the output object.
+
+### Parameters
+
+#### form
+
+`HTMLFormElement`
+
+The HTMLFormElement instance to serialize.
+
+#### options?
+
+`SO`
+
+Options for serialization.
+
+### Returns
 
 `T`
 
