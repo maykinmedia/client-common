@@ -3,6 +3,10 @@
   "version": "0.0.7",
   "description": "Common client (browser) support utilities for user interfaces",
   "license": "EUPL-1.2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maykinmedia/client-common.git"
+  },
   "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
