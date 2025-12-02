@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **serializeInputElement**\<`TypedFallback`, `SO`\>(`input`, `options`): `SerializedValue`\<`SO`\>
+> **serializeInputElement**\<`TypedFallback`, `SO`\>(`input`, `options`): [`SerializedValue`](../type-aliases/SerializedValue.md)\<`SO`\>
 
 Serializes an individual HTMLInputElement.
 
@@ -45,13 +45,13 @@ Options for serialization.
 
 ### Returns
 
-`SerializedValue`\<`SO`\>
+[`SerializedValue`](../type-aliases/SerializedValue.md)\<`SO`\>
 
 The input's value or undefined if unchecked checkbox/radio.
 
 ## Call Signature
 
-> **serializeInputElement**\<`TypedFallback`, `SO`\>(`input`, `options`?): `SerializedValue`\<`SO`\>
+> **serializeInputElement**\<`TypedFallback`, `SO`\>(`input`, `options`?): [`SerializedValue`](../type-aliases/SerializedValue.md)\<`SO`\>
 
 Serializes an individual HTMLInputElement.
 
@@ -88,6 +88,6 @@ Options for serialization.
 
 ### Returns
 
-`SerializedValue`\<`SO`\>
+[`SerializedValue`](../type-aliases/SerializedValue.md)\<`SO`\>
 
 The input's value or undefined if unchecked checkbox/radio.

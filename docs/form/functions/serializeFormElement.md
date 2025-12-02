@@ -31,7 +31,7 @@ Serialization options.
 
 #### T
 
-`T` = `Record`\<`string`, `SerializedValue`\<`SO`\>\>
+`T` = `Record`\<`string`, [`SerializedValue`](../type-aliases/SerializedValue.md)\<`SO`\>\>
 
 The expected structure of the output object.
 
@@ -80,7 +80,7 @@ Serialization options.
 
 #### T
 
-`T` = `Record`\<`string`, `SerializedValue`\<`SO`\>\>
+`T` = `Record`\<`string`, [`SerializedValue`](../type-aliases/SerializedValue.md)\<`SO`\>\>
 
 The expected structure of the output object.
 
