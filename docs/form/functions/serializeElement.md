@@ -8,7 +8,7 @@
 
 ## Call Signature
 
-> **serializeElement**\<`TypedFallback`, `SO`\>(`element`, `options`): `SerializedValue`\<`SO`\>
+> **serializeElement**\<`TypedFallback`, `SO`\>(`element`, `options`): [`SerializedValue`](../type-aliases/SerializedValue.md)\<`SO`\>
 
 Serializes a single form control element or group of controls.
 
@@ -45,13 +45,13 @@ Options for serialization.
 
 ### Returns
 
-`SerializedValue`\<`SO`\>
+[`SerializedValue`](../type-aliases/SerializedValue.md)\<`SO`\>
 
 The serialized value of the element, or undefined if unsupported.
 
 ## Call Signature
 
-> **serializeElement**\<`TypedFallback`, `SO`\>(`element`, `options`?): `SerializedValue`\<`SO`\>
+> **serializeElement**\<`TypedFallback`, `SO`\>(`element`, `options`?): [`SerializedValue`](../type-aliases/SerializedValue.md)\<`SO`\>
 
 Serializes a single form control element or group of controls.
 
@@ -88,6 +88,6 @@ Options for serialization.
 
 ### Returns
 
-`SerializedValue`\<`SO`\>
+[`SerializedValue`](../type-aliases/SerializedValue.md)\<`SO`\>
 
 The serialized value of the element, or undefined if unsupported.

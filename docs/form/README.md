@@ -8,6 +8,7 @@
 
 ## Type Aliases
 
+- [SerializedValue](type-aliases/SerializedValue.md)
 - [SerializeOptions](type-aliases/SerializeOptions.md)
 
 ## Functions
