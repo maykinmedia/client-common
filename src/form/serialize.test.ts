@@ -501,4 +501,30 @@ describe("Issue #20 - Calling serializeInputElement returns incorrect values for
       });
     },
   );
+
+  test("RadioNodeList empty value", () => {
+    const form = elementFactory<HTMLFormElement>("form");
+    elementFactory<HTMLInputElement>(
+      "input",
+      { name: "radio", type: "radio" },
+      form,
+    );
+    elementFactory<HTMLInputElement>(
+      "input",
+      { name: "radio", type: "radio" },
+      form,
+    );
+
+    const untyped = serializeFormElement(form);
+    expect(untyped).toEqual({ radio: undefined });
+
+    const typed = serializeFormElement(form, { typed: true });
+    expect(typed).toEqual({ radio: null });
+
+    const custom = serializeFormElement(form, {
+      typed: true,
+      typedFallback: -1,
+    });
+    expect(custom).toEqual({ radio: -1 });
+  });
 });
