@@ -1,6 +1,6 @@
 {
   "name": "@maykin-ui/client-common",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Common client (browser) support utilities for user interfaces",
   "license": "EUPL-1.2",
   "type": "module",
