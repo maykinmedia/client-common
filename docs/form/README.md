@@ -10,6 +10,8 @@
 
 - [SerializedValue](type-aliases/SerializedValue.md)
 - [SerializeOptions](type-aliases/SerializeOptions.md)
+- [TypedSerializedValue](type-aliases/TypedSerializedValue.md)
+- [UntypedSerializedValue](type-aliases/UntypedSerializedValue.md)
 
 ## Functions
 

@@ -35,13 +35,13 @@ export type SerializedValue<SO> = SO extends {
     : UntypedSerializedValue | UntypedSerializedValue[] // `typed` is falsy, use `string | undefined` as type.
   : UntypedSerializedValue | UntypedSerializedValue[]; // `typed` is not set, use `string | undefined` as type.
 
-type TypedSerializedValue<SO> = SO extends {
+export type TypedSerializedValue<SO> = SO extends {
   typedFallback: infer TypedFallback;
 } // Check whether `typedFallback` is set.
   ? boolean | string | number | Date | TypedFallback // Use `typedFallback` in union.
   : boolean | string | number | Date | null; // Use `null` (default) in union.
 
-type UntypedSerializedValue = string | undefined; // `typed` is falsy, use `string | undefined` as type.
+export type UntypedSerializedValue = string | undefined; // `typed` is falsy, use `string | undefined` as type.
 
 /**
  * Returns the final options including defaults.
