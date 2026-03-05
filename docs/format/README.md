@@ -19,6 +19,7 @@
 - [addSpaces](functions/addSpaces.md)
 - [distinctArray](functions/distinctArray.md)
 - [forceArray](functions/forceArray.md)
+- [formatDate](functions/formatDate.md)
 - [hyphens2Whitespace](functions/hyphens2Whitespace.md)
 - [isLink](functions/isLink.md)
 - [removeSpecialChars](functions/removeSpecialChars.md)
