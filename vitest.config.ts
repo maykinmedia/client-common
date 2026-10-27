@@ -12,9 +12,10 @@ export default defineConfig({
       include: ["src/**/*"],
       exclude: [
         "*/fixtures",
-        "/**/*.stories.tsx",
-        "/**/*.test.tsx",
-        "/**/*.d.ts",
+        "**/*.d.ts",
+        "**/*.stories.tsx",
+        "**/*.test.tsx",
+        "**/*.md",
       ],
     },
   },

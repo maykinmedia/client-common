@@ -25,7 +25,7 @@
     "declarationDir": "dist/types",
 
     /* Vite */
-    "types": ["vite/client", "vitest/globals"]
+    "types": ["node" ,"vite/client", "vitest/globals"]
   },
   "include": ["src"]
 }
