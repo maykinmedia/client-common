@@ -51,6 +51,11 @@
       "import": "./dist/es/env.js",
       "require": "./dist/cjs/env.js"
     },
+    "./factory": {
+      "types": "./dist/types/factory/factory.d.ts",
+      "import": "./dist/es/factory.js",
+      "require": "./dist/cjs/factory.js"
+    },
     "./form": {
       "types": "./dist/types/form/form.d.ts",
       "import": "./dist/es/form.js",
